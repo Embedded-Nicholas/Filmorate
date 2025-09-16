@@ -12,8 +12,8 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Slf4j
-public class FilmValidator {
 
+public class FilmValidator {
     private static final LocalDate CINEMA_BIRTHDAY = LocalDate.of(1895, 12, 28);
     private static final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     private static final Validator validator = factory.getValidator();
