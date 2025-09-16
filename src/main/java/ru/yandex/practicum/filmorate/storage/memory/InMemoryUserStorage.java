@@ -7,7 +7,6 @@ import ru.yandex.practicum.filmorate.storage.UserStorage;
 import ru.yandex.practicum.filmorate.validator.UserValidator;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Repository
 @Slf4j
