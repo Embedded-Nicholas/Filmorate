@@ -1,0 +1,166 @@
+2025-10-07 20:04:43.836084Z jdbc[3]: exception
+java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supported.
+	at org.h2.jdbc.JdbcConnection.setClientInfo(JdbcConnection.java:1624)
+	at com.intellij.database.remote.jdbc.impl.RemoteConnectionImpl.setClientInfo(RemoteConnectionImpl.java:469)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:360)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:200)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:197)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:598)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:844)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:721)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:720)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-10-07 20:04:46.748385Z jdbc[3]: exception
+java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supported.
+	at org.h2.jdbc.JdbcConnection.setClientInfo(JdbcConnection.java:1624)
+	at com.intellij.database.remote.jdbc.impl.RemoteConnectionImpl.setClientInfo(RemoteConnectionImpl.java:469)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:360)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:200)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:197)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:598)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:844)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:721)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:720)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-10-07 23:05:25.372721+03:00 jdbc[3]: exception
+java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supported.
+	at org.h2.jdbc.JdbcConnection.setClientInfo(JdbcConnection.java:1624)
+	at org.jkiss.dbeaver.ext.generic.model.GenericDataSource.populateClientAppName(GenericDataSource.java:198)
+	at org.jkiss.dbeaver.ext.generic.model.GenericDataSource.openConnection(GenericDataSource.java:161)
+	at org.jkiss.dbeaver.ext.h2.model.H2DataSource.openConnection(H2DataSource.java:74)
+	at org.jkiss.dbeaver.model.impl.jdbc.JDBCExecutionContext.connect(JDBCExecutionContext.java:124)
+	at org.jkiss.dbeaver.model.impl.jdbc.JDBCRemoteInstance.initializeMainContext(JDBCRemoteInstance.java:106)
+	at org.jkiss.dbeaver.model.impl.jdbc.JDBCRemoteInstance.<init>(JDBCRemoteInstance.java:61)
+	at org.jkiss.dbeaver.model.impl.jdbc.JDBCDataSource.initializeRemoteInstance(JDBCDataSource.java:125)
+	at org.jkiss.dbeaver.ext.generic.model.GenericDataSource.<init>(GenericDataSource.java:124)
+	at org.jkiss.dbeaver.ext.h2.model.H2DataSource.<init>(H2DataSource.java:43)
+	at org.jkiss.dbeaver.ext.h2.model.H2MetaModel.createDataSourceImpl(H2MetaModel.java:57)
+	at org.jkiss.dbeaver.ext.generic.GenericDataSourceProvider.openDataSource(GenericDataSourceProvider.java:57)
+	at org.jkiss.dbeaver.registry.DataSourceDescriptor.openDataSource(DataSourceDescriptor.java:1414)
+	at org.jkiss.dbeaver.registry.DataSourceDescriptor.connect0(DataSourceDescriptor.java:1272)
+	at org.jkiss.dbeaver.registry.DataSourceDescriptor.connect(DataSourceDescriptor.java:1063)
+	at org.jkiss.dbeaver.runtime.jobs.ConnectJob.run(ConnectJob.java:78)
+	at org.jkiss.dbeaver.runtime.jobs.ConnectionTestJob.run(ConnectionTestJob.java:102)
+	at org.jkiss.dbeaver.model.runtime.AbstractJob.run(AbstractJob.java:119)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+2025-10-07 23:05:31.643568+03:00 jdbc[3]: exception
+java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supported.
+	at org.h2.jdbc.JdbcConnection.setClientInfo(JdbcConnection.java:1624)
+	at org.jkiss.dbeaver.ext.generic.model.GenericDataSource.populateClientAppName(GenericDataSource.java:198)
+	at org.jkiss.dbeaver.ext.generic.model.GenericDataSource.openConnection(GenericDataSource.java:161)
+	at org.jkiss.dbeaver.ext.h2.model.H2DataSource.openConnection(H2DataSource.java:74)
+	at org.jkiss.dbeaver.model.impl.jdbc.JDBCExecutionContext.connect(JDBCExecutionContext.java:124)
+	at org.jkiss.dbeaver.model.impl.jdbc.JDBCRemoteInstance.initializeMainContext(JDBCRemoteInstance.java:106)
+	at org.jkiss.dbeaver.model.impl.jdbc.JDBCRemoteInstance.<init>(JDBCRemoteInstance.java:61)
+	at org.jkiss.dbeaver.model.impl.jdbc.JDBCDataSource.initializeRemoteInstance(JDBCDataSource.java:125)
+	at org.jkiss.dbeaver.ext.generic.model.GenericDataSource.<init>(GenericDataSource.java:124)
+	at org.jkiss.dbeaver.ext.h2.model.H2DataSource.<init>(H2DataSource.java:43)
+	at org.jkiss.dbeaver.ext.h2.model.H2MetaModel.createDataSourceImpl(H2MetaModel.java:57)
+	at org.jkiss.dbeaver.ext.generic.GenericDataSourceProvider.openDataSource(GenericDataSourceProvider.java:57)
+	at org.jkiss.dbeaver.registry.DataSourceDescriptor.openDataSource(DataSourceDescriptor.java:1414)
+	at org.jkiss.dbeaver.registry.DataSourceDescriptor.connect0(DataSourceDescriptor.java:1272)
+	at org.jkiss.dbeaver.registry.DataSourceDescriptor.connect(DataSourceDescriptor.java:1063)
+	at org.jkiss.dbeaver.runtime.jobs.ConnectJob.run(ConnectJob.java:78)
+	at org.jkiss.dbeaver.runtime.jobs.ConnectJob.runSync(ConnectJob.java:109)
+	at org.jkiss.dbeaver.ui.actions.datasource.DataSourceHandler.connectToDataSource(DataSourceHandler.java:123)
+	at org.jkiss.dbeaver.ui.actions.datasource.UIServiceConnectionsImpl.initConnection(UIServiceConnectionsImpl.java:87)
+	at org.jkiss.dbeaver.model.DBUtils.initDataSource(DBUtils.java:2456)
+	at org.jkiss.dbeaver.model.navigator.DBNDataSource.initializeNode(DBNDataSource.java:159)
+	at org.jkiss.dbeaver.model.navigator.DBNDatabaseNode.getChildren(DBNDatabaseNode.java:225)
+	at org.jkiss.dbeaver.model.navigator.DBNDatabaseNode.getChildren(DBNDatabaseNode.java:1)
+	at org.jkiss.dbeaver.model.navigator.DBNUtils.getNodeChildrenFiltered(DBNUtils.java:99)
+	at org.jkiss.dbeaver.ui.navigator.database.load.TreeLoadService.evaluate(TreeLoadService.java:49)
+	at org.jkiss.dbeaver.ui.navigator.database.load.TreeLoadService.evaluate(TreeLoadService.java:1)
+	at org.jkiss.dbeaver.ui.LoadingJob.run(LoadingJob.java:88)
+	at org.jkiss.dbeaver.model.runtime.AbstractJob.run(AbstractJob.java:119)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+2025-10-07 23:05:31.649226+03:00 jdbc[4]: exception
+java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supported.
+	at org.h2.jdbc.JdbcConnection.setClientInfo(JdbcConnection.java:1624)
+	at org.jkiss.dbeaver.ext.generic.model.GenericDataSource.populateClientAppName(GenericDataSource.java:198)
+	at org.jkiss.dbeaver.ext.generic.model.GenericDataSource.openConnection(GenericDataSource.java:161)
+	at org.jkiss.dbeaver.ext.h2.model.H2DataSource.openConnection(H2DataSource.java:74)
+	at org.jkiss.dbeaver.model.impl.jdbc.JDBCExecutionContext.connect(JDBCExecutionContext.java:124)
+	at org.jkiss.dbeaver.model.impl.jdbc.JDBCRemoteInstance.initializeMetaContext(JDBCRemoteInstance.java:141)
+	at org.jkiss.dbeaver.model.impl.jdbc.JDBCDataSource.initialize(JDBCDataSource.java:523)
+	at org.jkiss.dbeaver.ext.generic.model.GenericDataSource.initialize(GenericDataSource.java:475)
+	at org.jkiss.dbeaver.registry.DataSourceDescriptor.openDataSource(DataSourceDescriptor.java:1434)
+	at org.jkiss.dbeaver.registry.DataSourceDescriptor.connect0(DataSourceDescriptor.java:1272)
+	at org.jkiss.dbeaver.registry.DataSourceDescriptor.connect(DataSourceDescriptor.java:1063)
+	at org.jkiss.dbeaver.runtime.jobs.ConnectJob.run(ConnectJob.java:78)
+	at org.jkiss.dbeaver.runtime.jobs.ConnectJob.runSync(ConnectJob.java:109)
+	at org.jkiss.dbeaver.ui.actions.datasource.DataSourceHandler.connectToDataSource(DataSourceHandler.java:123)
+	at org.jkiss.dbeaver.ui.actions.datasource.UIServiceConnectionsImpl.initConnection(UIServiceConnectionsImpl.java:87)
+	at org.jkiss.dbeaver.model.DBUtils.initDataSource(DBUtils.java:2456)
+	at org.jkiss.dbeaver.model.navigator.DBNDataSource.initializeNode(DBNDataSource.java:159)
+	at org.jkiss.dbeaver.model.navigator.DBNDatabaseNode.getChildren(DBNDatabaseNode.java:225)
+	at org.jkiss.dbeaver.model.navigator.DBNDatabaseNode.getChildren(DBNDatabaseNode.java:1)
+	at org.jkiss.dbeaver.model.navigator.DBNUtils.getNodeChildrenFiltered(DBNUtils.java:99)
+	at org.jkiss.dbeaver.ui.navigator.database.load.TreeLoadService.evaluate(TreeLoadService.java:49)
+	at org.jkiss.dbeaver.ui.navigator.database.load.TreeLoadService.evaluate(TreeLoadService.java:1)
+	at org.jkiss.dbeaver.ui.LoadingJob.run(LoadingJob.java:88)
+	at org.jkiss.dbeaver.model.runtime.AbstractJob.run(AbstractJob.java:119)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+2025-10-08 16:42:53.345760+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)\000d\000aVALUES (?, ?, 1, ?)\000d\000a[*]ON CONFLICT (user_id1, user_id2) DO UPDATE SET\000d\000astatus_id = 1, initiated_by = ?"
+Syntax error in SQL statement "INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)\000d\000aVALUES (?, ?, 1, ?)\000d\000a[*]ON CONFLICT (user_id1, user_id2) DO UPDATE SET\000d\000astatus_id = 1, initiated_by = ?"; SQL statement:
+INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)
+VALUES (?, ?, 1, ?)
+ON CONFLICT (user_id1, user_id2) DO UPDATE SET
+status_id = 1, initiated_by = ? [42000-232]
+2025-10-08 16:42:53.662182+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)\000d\000aVALUES (?, ?, 1, ?)\000d\000a[*]ON CONFLICT (user_id1, user_id2) DO UPDATE SET\000d\000astatus_id = 1, initiated_by = ?"
+Syntax error in SQL statement "INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)\000d\000aVALUES (?, ?, 1, ?)\000d\000a[*]ON CONFLICT (user_id1, user_id2) DO UPDATE SET\000d\000astatus_id = 1, initiated_by = ?"; SQL statement:
+INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)
+VALUES (?, ?, 1, ?)
+ON CONFLICT (user_id1, user_id2) DO UPDATE SET
+status_id = 1, initiated_by = ? [42000-232]
+2025-10-08 16:42:54.412822+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)\000d\000aVALUES (?, ?, 1, ?)\000d\000a[*]ON CONFLICT (user_id1, user_id2) DO UPDATE SET\000d\000astatus_id = 1, initiated_by = ?"
+Syntax error in SQL statement "INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)\000d\000aVALUES (?, ?, 1, ?)\000d\000a[*]ON CONFLICT (user_id1, user_id2) DO UPDATE SET\000d\000astatus_id = 1, initiated_by = ?"; SQL statement:
+INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)
+VALUES (?, ?, 1, ?)
+ON CONFLICT (user_id1, user_id2) DO UPDATE SET
+status_id = 1, initiated_by = ? [42000-232]
+2025-10-08 16:42:54.945868+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)\000d\000aVALUES (?, ?, 1, ?)\000d\000a[*]ON CONFLICT (user_id1, user_id2) DO UPDATE SET\000d\000astatus_id = 1, initiated_by = ?"
+Syntax error in SQL statement "INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)\000d\000aVALUES (?, ?, 1, ?)\000d\000a[*]ON CONFLICT (user_id1, user_id2) DO UPDATE SET\000d\000astatus_id = 1, initiated_by = ?"; SQL statement:
+INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)
+VALUES (?, ?, 1, ?)
+ON CONFLICT (user_id1, user_id2) DO UPDATE SET
+status_id = 1, initiated_by = ? [42000-232]
+2025-10-08 16:42:55.227240+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)\000d\000aVALUES (?, ?, 1, ?)\000d\000a[*]ON CONFLICT (user_id1, user_id2) DO UPDATE SET\000d\000astatus_id = 1, initiated_by = ?"
+Syntax error in SQL statement "INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)\000d\000aVALUES (?, ?, 1, ?)\000d\000a[*]ON CONFLICT (user_id1, user_id2) DO UPDATE SET\000d\000astatus_id = 1, initiated_by = ?"; SQL statement:
+INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)
+VALUES (?, ?, 1, ?)
+ON CONFLICT (user_id1, user_id2) DO UPDATE SET
+status_id = 1, initiated_by = ? [42000-232]
+2025-10-08 16:42:55.457630+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)\000d\000aVALUES (?, ?, 1, ?)\000d\000a[*]ON CONFLICT (user_id1, user_id2) DO UPDATE SET\000d\000astatus_id = 1, initiated_by = ?"
+Syntax error in SQL statement "INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)\000d\000aVALUES (?, ?, 1, ?)\000d\000a[*]ON CONFLICT (user_id1, user_id2) DO UPDATE SET\000d\000astatus_id = 1, initiated_by = ?"; SQL statement:
+INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)
+VALUES (?, ?, 1, ?)
+ON CONFLICT (user_id1, user_id2) DO UPDATE SET
+status_id = 1, initiated_by = ? [42000-232]
+2025-10-08 16:42:55.733070+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)\000d\000aVALUES (?, ?, 1, ?)\000d\000a[*]ON CONFLICT (user_id1, user_id2) DO UPDATE SET\000d\000astatus_id = 1, initiated_by = ?"
+Syntax error in SQL statement "INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)\000d\000aVALUES (?, ?, 1, ?)\000d\000a[*]ON CONFLICT (user_id1, user_id2) DO UPDATE SET\000d\000astatus_id = 1, initiated_by = ?"; SQL statement:
+INSERT INTO friendships (user_id1, user_id2, status_id, initiated_by)
+VALUES (?, ?, 1, ?)
+ON CONFLICT (user_id1, user_id2) DO UPDATE SET
+status_id = 1, initiated_by = ? [42000-232]
