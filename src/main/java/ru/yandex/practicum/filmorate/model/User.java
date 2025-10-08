@@ -34,6 +34,8 @@ public class User {
     @NotNull(message = "Дата рождения не может быть пустой")
     private LocalDate birthday;
 
+    private Set<Long> friends;
+
     private int friendsCount;
 
     private final Map<Long, FriendRequestStatus> outgoingRequests = new HashMap<>();
@@ -41,4 +43,23 @@ public class User {
     private final Map<Long, FriendRequestStatus> incomingRequests = new HashMap<>();
 
     private final Map<Long, FriendRequestStatus> friendRequests;
+
+    public void addFriend(Long friendId) {
+        friends.add(friendId);
+        this.friendsCount++;
+    }
+
+    public void removeFriend(Long friendId) {
+        friends.remove(friendId);
+        this.friendsCount--;
+    }
+
+    public boolean isFriend(Long friendId) {
+        return friends.contains(friendId);
+    }
+
+    public int getFriendsCount() {
+        return friends!= null? this.friendsCount: 0;
+    }
+
 }

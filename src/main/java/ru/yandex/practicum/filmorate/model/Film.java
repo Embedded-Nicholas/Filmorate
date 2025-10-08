@@ -36,4 +36,16 @@ public class Film {
     private Set<Genre> filmGenres;
 
     private MpaRating mpaRating;
+
+    public void addLike(Long userId) {
+        likedUserIds.add(userId);
+    }
+
+    public void removeLike(Long userId) {
+        likedUserIds.remove(userId);
+    }
+
+    public int getLikesCount() {
+        return likedUserIds.size();
+    }
 }
