@@ -11,7 +11,4 @@ public interface UserStorage {
     User updateUser(User user);
     Optional<User> getUser(Long id);
     Map<Long, User> getUsers();
-//    Set<User> getFriends(Long id);
-//    Set<User> getCommonFriends(Long userId1, Long userId2);
-
 }

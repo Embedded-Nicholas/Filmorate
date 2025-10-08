@@ -4,8 +4,11 @@ import lombok.Builder;
 import lombok.Data;
 import jakarta.validation.constraints.*;
 import lombok.EqualsAndHashCode;
+import ru.yandex.practicum.filmorate.enums.FriendRequestStatus;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 @Data
@@ -31,26 +34,11 @@ public class User {
     @NotNull(message = "Дата рождения не может быть пустой")
     private LocalDate birthday;
 
-    private Set<Long> friends;
-
     private int friendsCount;
 
-    public void addFriend(Long friendId) {
-        friends.add(friendId);
-        this.friendsCount++;
-    }
+    private final Map<Long, FriendRequestStatus> outgoingRequests = new HashMap<>();
 
-    public void removeFriend(Long friendId) {
-        friends.remove(friendId);
-        this.friendsCount--;
-    }
+    private final Map<Long, FriendRequestStatus> incomingRequests = new HashMap<>();
 
-    public boolean isFriend(Long friendId) {
-        return friends.contains(friendId);
-    }
-
-    public int getFriendsCount() {
-        return friends!= null? this.friendsCount: 0;
-    }
-
+    private final Map<Long, FriendRequestStatus> friendRequests;
 }

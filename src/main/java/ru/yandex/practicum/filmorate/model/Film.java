@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 import jakarta.validation.constraints.*;
 import lombok.EqualsAndHashCode;
+import ru.yandex.practicum.filmorate.enums.Genre;
+import ru.yandex.practicum.filmorate.enums.MpaRating;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -17,7 +19,6 @@ public class Film {
     private Long id;
 
     @NotBlank(message = "Название не может быть пустым")
-    @EqualsAndHashCode.Include
     private String name;
 
     @Size(max = 200, message = "Максимальная длина описания — 200 символов")
@@ -32,15 +33,7 @@ public class Film {
 
     private Set<Long> likedUserIds;
 
-    public void addLike(Long userId) {
-        likedUserIds.add(userId);
-    }
+    private Set<Genre> filmGenres;
 
-    public void removeLike(Long userId) {
-        likedUserIds.remove(userId);
-    }
-
-    public int getLikesCount() {
-        return likedUserIds.size();
-    }
+    private MpaRating mpaRating;
 }

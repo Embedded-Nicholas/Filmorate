@@ -7,7 +7,7 @@ import ru.yandex.practicum.filmorate.storage.FilmStorage;
 
 import java.util.*;
 
-@Repository
+@Repository("inMemoryFilmStorage")
 @Slf4j
 public class InMemoryFilmStorage implements FilmStorage {
     private final HashMap<Long, Film> films = new HashMap<>();
