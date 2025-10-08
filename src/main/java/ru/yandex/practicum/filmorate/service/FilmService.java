@@ -7,20 +7,21 @@ import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.IncorrectCountException;
 import ru.yandex.practicum.filmorate.exception.ObjectNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
+import org.springframework.beans.factory.annotation.Qualifier;
 import ru.yandex.practicum.filmorate.storage.FilmStorage;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
+import ru.yandex.practicum.filmorate.storage.db.FilmDbStorage;
 import ru.yandex.practicum.filmorate.validator.FilmValidator;
 
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class FilmService {
-    private final FilmStorage filmStorage;
-    private final UserStorage userStorage;
+    private final @Qualifier("filmDbStorage") FilmStorage filmStorage;
+    private final @Qualifier("userDbStorage") UserStorage userStorage;
+    private final @Qualifier("filmDbStorage") FilmDbStorage filmDbStorage;
 
     public Film addFilm(Film film) {
         FilmValidator.validate(film);
@@ -69,36 +70,28 @@ public class FilmService {
 
     public void addLike(Long filmId, Long userId) {
         log.info("Пользователь {} ставит лайк фильму {}", userId, filmId);
-        this.manageLikes(filmId, userId, film -> film.addLike(userId));
+        if (this.userStorage.getUser(userId).isEmpty()) {
+            throw new ObjectNotFoundException("Такого пользователя не существует");
+        }
+        filmDbStorage.addLike(filmId, userId);
     }
 
     public void removeLike(Long filmId, Long userId) {
         log.info("Пользователь {} удаляет лайк у фильма {}", userId, filmId);
-        this.manageLikes(filmId, userId, film -> film.removeLike(userId));
+        if (this.userStorage.getUser(userId).isEmpty()) {
+            throw new ObjectNotFoundException("Такого пользователя не существует");
+        }
+        filmDbStorage.removeLike(filmId, userId);
     }
 
     public Set<Film> findTopCountByLikes(int count) {
-        log.info("Запрос топ-10 фильмов по количеству лайков");
+        log.info("Запрос топ-{} фильмов по количеству лайков", count);
         if (count <= 0){
             throw new IncorrectCountException("Значение переменной count должно быть > 0");
         }
 
-        return this.filmStorage.getFilms().values().stream()
-                .sorted(Comparator.comparing(Film::getLikesCount).reversed())
-                .limit(count)
-                .collect(Collectors.toCollection(LinkedHashSet::new));
+        List<Film> topFilms = filmDbStorage.getTopFilmsByLikes(count);
+        return new LinkedHashSet<>(topFilms);
     }
 
-    private void manageLikes(Long filmId, Long userId, Consumer<Film> function) {
-        if (this.userStorage.getUser(userId).isEmpty()){
-            throw new ObjectNotFoundException("Такого пользователя не существует");
-        }
-
-        Optional<Film> film = this.filmStorage.getFilm(filmId);
-        if (film.isPresent()) {
-            function.accept(film.get());
-        } else {
-            throw new ObjectNotFoundException("Такого фильма не существует");
-        }
-    }
 }

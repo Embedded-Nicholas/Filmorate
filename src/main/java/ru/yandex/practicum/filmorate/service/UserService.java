@@ -6,21 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.ObjectNotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
+import org.springframework.beans.factory.annotation.Qualifier;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
+import ru.yandex.practicum.filmorate.storage.db.UserDbStorage;
 import ru.yandex.practicum.filmorate.validator.UserValidator;
 
-import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class UserService {
-    private final UserStorage storage;
+    private final @Qualifier("userDbStorage") UserStorage storage;
+    private final @Qualifier("userDbStorage") UserDbStorage userDbStorage;
 
     public User addUser(User user) {
         log.info("Добавление пользователя: {}", user);
@@ -72,63 +73,24 @@ public class UserService {
 
     public void addFriend(Long userId, Long friendId) {
         log.info("Пользователь {} добавляет в друзья пользователя {}", userId, friendId);
-        this.manageFriends(userId, friendId,
-                (user, friend) -> {
-                    user.addFriend(friend.getId());
-                    friend.addFriend(user.getId());
-                });
+        userDbStorage.addFriend(userId, friendId);
     }
 
     public Set<User> getFriends(Long userId) {
-        Optional<User> user = this.getUser(userId);
-        Set<User> friends = getFriendsFromUserIds(user);
-        return friends;
+        List<User> friends = userDbStorage.getFriends(userId);
+        return new HashSet<>(friends);
     }
 
     public void removeFriend(Long userId, Long friendId) {
         log.info("Пользователь {} удаляет из друзей пользователя {}", userId, friendId);
-        this.manageFriends(userId, friendId,
-                (user, friend) -> {
-                    user.removeFriend(friend.getId());
-                    friend.removeFriend(user.getId());
-                });
+        userDbStorage.removeFriend(userId, friendId);
     }
 
     public Set<User> getCommonFriends(Long userId1, Long userId2) {
         log.info("Поиск общих друзей у пользователей с id: {}, {}", userId1, userId2);
-        Optional<User> user1 = this.getUser(userId1);
-        Optional<User> user2 = this.getUser(userId2);
-
-        if (user1.isPresent() && user2.isPresent()) {
-            Set<User> user1Friends = this.getFriendsFromUserIds(user1);
-            Set<User> user2Friends = this.getFriendsFromUserIds(user2);
-
-            Set<User> commonFriends = new HashSet<>(user1Friends);
-            commonFriends.retainAll(user2Friends);
-            log.debug("Запрос общих друзей пользователя c id: {} и пользователя с id: {}, количество общих друзей={}", userId1, userId2, commonFriends.size());
-            return commonFriends;
-        }
-        return Collections.emptySet();
+        List<User> commonFriends = userDbStorage.getCommonFriends(userId1, userId2);
+        log.debug("Запрос общих друзей пользователя c id: {} и пользователя с id: {}, количество общих друзей={}", userId1, userId2, commonFriends.size());
+        return new HashSet<>(commonFriends);
     }
 
-    private Set<User> getFriendsFromUserIds(Optional<User> user) {
-        return user.map(value -> value.getFriends()
-                .stream()
-                .map(this::getUser)
-                .filter(Optional::isPresent)
-                .map(Optional::get).collect(Collectors.toSet())).orElse(Collections.emptySet());
-    }
-
-    private void manageFriends(Long userId,
-                               Long friendId,
-                               BiConsumer<User, User> function) {
-        Optional<User> user = storage.getUser(userId);
-        Optional<User> friend = storage.getUser(friendId);
-
-        if (user.isPresent() && friend.isPresent()) {
-            function.accept(user.get(), friend.get());
-        } else {
-            throw new ObjectNotFoundException("Одного из друзей не существует");
-        }
-    }
 }
