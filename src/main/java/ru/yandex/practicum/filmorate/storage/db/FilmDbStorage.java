@@ -123,12 +123,9 @@ public class FilmDbStorage implements FilmStorage {
         String sql = sqlQueryLoader.getQuery("film-queries.sql", "Get all films");
         
         List<Film> films = jdbcTemplate.query(sql, this::mapFilmWithMpa);
-
-        films.forEach(film -> {
-            initializeFilmCollections(film);
-            loadFilmGenres(film);
-            loadFilmLikes(film);
-        });
+        films.forEach(this::initializeFilmCollections);
+        loadGenresForFilms(films);
+        loadLikesForFilms(films);
         
         Map<Long, Film> filmMap = new HashMap<>();
         for (Film film : films) {
@@ -235,11 +232,8 @@ public class FilmDbStorage implements FilmStorage {
         String sql = sqlQueryLoader.getQuery("film-queries.sql", "Get top films by likes");
         
         List<Film> films = jdbcTemplate.query(sql, this::mapFilmWithMpa, limit);
-
-        films.forEach(film -> {
-            initializeFilmCollections(film);
-            loadFilmGenres(film);
-        });
+        films.forEach(this::initializeFilmCollections);
+        loadGenresForFilms(films);
         
         return films;
     }
@@ -250,11 +244,66 @@ public class FilmDbStorage implements FilmStorage {
         String sql = sqlQueryLoader.getQuery("film-queries.sql", "Get liked films by user");
         
         List<Film> films = jdbcTemplate.query(sql, this::mapFilmWithMpa, userId);
-        films.forEach(film -> {
-            initializeFilmCollections(film);
-            loadFilmGenres(film);
-        });
+        films.forEach(this::initializeFilmCollections);
+        loadGenresForFilms(films);
         
         return films;
+    }
+
+    private void loadGenresForFilms(List<Film> films) {
+        if (films == null || films.isEmpty()) {
+            return;
+        }
+        List<Long> ids = new ArrayList<>();
+        for (Film f : films) {
+            if (f.getId() != null) {
+                ids.add(f.getId());
+            }
+        }
+        if (ids.isEmpty()) {
+            return;
+        }
+        String placeholders = String.join(",", Collections.nCopies(ids.size(), "?"));
+        String sqlTemplate = sqlQueryLoader.getQuery("film-queries.sql", "Load genres for films (batch, placeholders to be injected)");
+        String sql = String.format(sqlTemplate, placeholders);
+        Map<Long, Set<Genre>> filmIdToGenres = new HashMap<>();
+        jdbcTemplate.query(sql, rs -> {
+            long filmId = rs.getLong("film_id");
+            String genreName = rs.getString("name");
+            Genre genre = Genre.valueOf(genreName);
+            filmIdToGenres.computeIfAbsent(filmId, k -> new HashSet<>()).add(genre);
+        }, ids.toArray());
+        for (Film f : films) {
+            Set<Genre> set = filmIdToGenres.getOrDefault(f.getId(), new HashSet<>());
+            f.setFilmGenres(set);
+        }
+    }
+
+    private void loadLikesForFilms(List<Film> films) {
+        if (films == null || films.isEmpty()) {
+            return;
+        }
+        List<Long> ids = new ArrayList<>();
+        for (Film f : films) {
+            if (f.getId() != null) {
+                ids.add(f.getId());
+            }
+        }
+        if (ids.isEmpty()) {
+            return;
+        }
+        String placeholders = String.join(",", Collections.nCopies(ids.size(), "?"));
+        String sqlTemplate = sqlQueryLoader.getQuery("film-queries.sql", "Load likes for films (batch, placeholders to be injected)");
+        String sql = String.format(sqlTemplate, placeholders);
+        Map<Long, Set<Long>> filmIdToLikes = new HashMap<>();
+        jdbcTemplate.query(sql, rs -> {
+            long filmId = rs.getLong("film_id");
+            long userId = rs.getLong("user_id");
+            filmIdToLikes.computeIfAbsent(filmId, k -> new HashSet<>()).add(userId);
+        }, ids.toArray());
+        for (Film f : films) {
+            Set<Long> set = filmIdToLikes.getOrDefault(f.getId(), new HashSet<>());
+            f.setLikedUserIds(set);
+        }
     }
 }

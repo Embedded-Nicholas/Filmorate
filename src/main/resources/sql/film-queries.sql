@@ -31,6 +31,15 @@ WHERE fg.film_id = ?
 -- Load film likes
 SELECT user_id FROM film_likes WHERE film_id = ?
 
+-- Load genres for films (batch, placeholders to be injected)
+SELECT fg.film_id, g.name
+FROM film_genres fg
+JOIN genres g ON g.id = fg.genre_id
+WHERE fg.film_id IN (%s)
+
+-- Load likes for films (batch, placeholders to be injected)
+SELECT film_id, user_id FROM film_likes WHERE film_id IN (%s)
+
 -- Save film genres
 INSERT INTO film_genres (film_id, genre_id) VALUES (?, ?)
 

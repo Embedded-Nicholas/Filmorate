@@ -114,11 +114,8 @@ public class UserDbStorage implements UserStorage {
         
         String sql = sqlQueryLoader.getQuery("user-queries.sql", "Get all users");
         List<User> users = jdbcTemplate.query(sql, userRowMapper);
-
-        users.forEach(user -> {
-            initializeUserCollections(user);
-            loadUserFriends(user);
-        });
+        users.forEach(this::initializeUserCollections);
+        loadFriendsForUsers(users);
         
         Map<Long, User> userMap = new HashMap<>();
         for (User user : users) {
@@ -180,10 +177,8 @@ public class UserDbStorage implements UserStorage {
         String sql = sqlQueryLoader.getQuery("user-queries.sql", "Get friends");
         
         List<User> friends = jdbcTemplate.query(sql, userRowMapper, userId, userId, userId);
-        friends.forEach(user -> {
-            initializeUserCollections(user);
-            loadUserFriends(user);
-        });
+        friends.forEach(this::initializeUserCollections);
+        loadFriendsForUsers(friends);
         
         return friends;
     }
@@ -195,11 +190,39 @@ public class UserDbStorage implements UserStorage {
         
         List<User> commonFriends = jdbcTemplate.query(sql, userRowMapper, 
                 userId1, userId1, userId1, userId2, userId2, userId2);
-        commonFriends.forEach(user -> {
-            initializeUserCollections(user);
-            loadUserFriends(user);
-        });
+        commonFriends.forEach(this::initializeUserCollections);
+        loadFriendsForUsers(commonFriends);
         
         return commonFriends;
+    }
+
+    private void loadFriendsForUsers(List<User> users) {
+        if (users == null || users.isEmpty()) {
+            return;
+        }
+        List<Long> ids = new ArrayList<>();
+        for (User u : users) {
+            if (u.getId() != null) {
+                ids.add(u.getId());
+            }
+        }
+        if (ids.isEmpty()) {
+            return;
+        }
+        String placeholders = String.join(",", Collections.nCopies(ids.size(), "?"));
+        String sqlTemplate = sqlQueryLoader.getQuery("user-queries.sql", "Load friends for users (batch, placeholders to be injected)");
+        String sql = String.format(sqlTemplate, placeholders);
+        List<Object> params = new ArrayList<>(ids);
+        Map<Long, Set<Long>> userIdToFriendIds = new HashMap<>();
+        jdbcTemplate.query(sql, rs -> {
+            long friendId = rs.getLong("friend_id");
+            long userId = rs.getLong("user_id");
+            userIdToFriendIds.computeIfAbsent(userId, k -> new HashSet<>()).add(friendId);
+        }, params.toArray());
+        for (User u : users) {
+            Set<Long> friends = userIdToFriendIds.getOrDefault(u.getId(), new HashSet<>());
+            u.setFriends(friends);
+            u.setFriendsCount(friends.size());
+        }
     }
 }

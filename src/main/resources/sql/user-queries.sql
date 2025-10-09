@@ -47,6 +47,13 @@ JOIN friendships f ON (
 )
 WHERE u.id != ?
 
+-- Load friends for users (batch, placeholders to be injected)
+SELECT CASE WHEN f.user_id1 = u.id THEN f.user_id2 ELSE f.user_id1 END AS friend_id,
+       u.id AS user_id
+FROM users u
+JOIN friendships f ON (u.id = f.user_id1 OR u.id = f.user_id2)
+WHERE u.id IN (%s)
+
 -- Get common friends (one-sided + confirmed)
 WITH user1_friends AS (
     SELECT CASE WHEN f.user_id1 = ? THEN f.user_id2 ELSE f.user_id1 END as friend_id

@@ -12,7 +12,7 @@ public class FilmUpdateRequest {
     String description;
     LocalDate releaseDate;
     Long duration;
-    FilmCreateRequest.Ref mpa;
-    List<FilmCreateRequest.Ref> genres;
+    Long mpa;
+    List<Long> genres;
 }
 

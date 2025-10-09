@@ -11,9 +11,6 @@ public class FilmCreateRequest {
     String description;
     LocalDate releaseDate;
     Long duration;
-    Ref mpa;
-    List<Ref> genres;
-
-    @Value
-    public static class Ref { Long id; }
+    Long mpa;
+    List<Long> genres;
 }
