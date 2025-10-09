@@ -2,26 +2,62 @@ package ru.yandex.practicum.filmorate.model;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.Setter;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 @Data
 @Builder(toBuilder = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
-    @Setter
+    @Positive
+    @EqualsAndHashCode.Include
     private Long id;
 
     @NotBlank(message = "Email не может быть пустым")
     @Email(message = "Некорректный email")
+    @EqualsAndHashCode.Include
     private String email;
 
     @NotBlank(message = "Логин не может быть пустым")
+    @EqualsAndHashCode.Include
     private String login;
 
+    @EqualsAndHashCode.Include
     private String name;
 
     @NotNull(message = "Дата рождения не может быть пустой")
     private LocalDate birthday;
+
+    private Set<Long> friends;
+
+    private int friendsCount;
+
+    private final Map<Long, FriendRequestStatus> outgoingRequests = new HashMap<>();
+
+    private final Map<Long, FriendRequestStatus> incomingRequests = new HashMap<>();
+
+    private final Map<Long, FriendRequestStatus> friendRequests;
+
+    public void addFriend(Long friendId) {
+        friends.add(friendId);
+        this.friendsCount++;
+    }
+
+    public void removeFriend(Long friendId) {
+        friends.remove(friendId);
+        this.friendsCount--;
+    }
+
+    public boolean isFriend(Long friendId) {
+        return friends.contains(friendId);
+    }
+
+    public int getFriendsCount() {
+        return friends!= null? this.friendsCount: 0;
+    }
+
 }
